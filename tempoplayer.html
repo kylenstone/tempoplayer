@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+	<title>Ding Dong</title>
+
+	<style>
+
+	#counter {
+		float: left;
+	}
+	</style>
+</head>
+<body>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.pack.js"></script>
+
+<div class="container"></div>
+	<div id="counter">
+	0
+	</div>
+</div>
+<script type="text/javascript">
+
+function getRandomThree(min, max) {
+	return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+// basic class implementation
+function mySoundPlayer() {
+    // privileged property for iteration
+    this.i = 0;
+
+    // privileged init method
+    this.init();
+}
+
+// define init method
+mySoundPlayer.prototype.init = function () {
+	var that = this;
+	var timer = 3000;
+
+    var soundbyte = 'ding.wav',
+    sound = new Audio(soundbyte);
+
+    setInterval(function() {
+       	timer = (getRandomThree(1,3) * 1000); 
+    	that.countUp();
+    	sound.play();    	
+    	console.log(timer);	
+    }, timer);
+
+};
+
+// define the counter method
+mySoundPlayer.prototype.countUp = function () {
+
+    this.i++;	
+
+    document.getElementById('counter').innerHTML = this.i;
+    // find all divs containing 'counter' and update the text
+    // $("div:contains('counter')").html(this.i);
+};
+
+// create a new instance of our counter class
+var soundPlayer = new mySoundPlayer();
+
+</script>
+
+
+</body>
+
+</html>
