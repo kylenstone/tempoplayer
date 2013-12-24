@@ -4,12 +4,8 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
 	<title>Ding Dong</title>
-
 	<style>
-
-	#counter {
-		float: left;
-	}
+	#counter {     float: left;    }
 	</style>
 </head>
 <body>
@@ -20,13 +16,14 @@
 	0
 	</div>
 </div>
+
 <script type="text/javascript">
 
 function getRandomThree(min, max) {
 	return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-// basic class implementation
+// mySoundPlayer = basic class, one property and one method
 function mySoundPlayer() {
     // privileged property for iteration
     this.i = 0;
@@ -38,11 +35,18 @@ function mySoundPlayer() {
 // define init method
 mySoundPlayer.prototype.init = function () {
 	var that = this;
+    // give timer an initial value.  We want to replace this in our interval loop to vary the timing of the ding.
 	var timer = 3000;
 
+    // define audio object
     var soundbyte = 'ding.wav',
     sound = new Audio(soundbyte);
 
+    /*Interval is supposed to:
+        1. Assign new value to timer 
+        2. Call the counter function
+        3. Play the sound against current time interval
+    */
     setInterval(function() {
        	timer = (getRandomThree(1,3) * 1000); 
     	that.countUp();
