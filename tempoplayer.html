@@ -1,64 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
-	<title>Ding Dong</title>
+	<title>Tempo Player</title>
 	<style>
-	#counter {     float: left;    }
+	#counter {     float: left; font-size: 48px;    }
 	</style>
 </head>
+
 <body>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.pack.js"></script>
 
 <div class="container"></div>
-	<div id="counter">
-	0
-	</div>
+	<div id="counter">0</div>
+    <button>Stop</button>
 </div>
 
 <script type="text/javascript">
+var looping = true;
+
 
 function getRandomThree(min, max) {
 	return Math.floor(Math.random() * (max - min + 1) + min);
-}
+};
 
-// mySoundPlayer = basic class, one property and one method
+/* mySoundPlayer: basic class with one property and one mthod */
 function mySoundPlayer() {
     // privileged property for iteration
     this.i = 0;
 
     // privileged init method
     this.init();
-}
+};
 
 // define init method
 mySoundPlayer.prototype.init = function () {
 	var that = this;
-    // give timer an initial value.  We want to replace this in our interval loop to vary the timing of the ding.
-	var timer = 3000;
+    var timer = 500;
 
-    // define audio object
     var soundbyte = 'ding.wav',
     sound = new Audio(soundbyte);
 
-    /*Interval is supposed to:
-        1. Assign new value to timer 
-        2. Call the counter function
-        3. Play the sound against current time interval
+    /* setTimeout()
+        - callback function uses random number to set timeout delay on countUp() and DING!
+        - if looping var is false, exit the loop
     */
-    setInterval(function() {
-       	timer = (getRandomThree(1,3) * 1000); 
-    	that.countUp();
-    	sound.play();    	
-    	console.log(timer);	
-    }, timer);
-
+    setTimeout(function() {
+            function callback() {
+                timer = (getRandomThree(1, 3) * 1000); 
+                console.log(timer);
+                that.countUp();
+                sound.play(); 
+                if (looping) { setTimeout( callback, timer ); };
+            };
+            if (looping) { setTimeout( callback, timer ); };
+    });
 };
 
 // define counter method
 mySoundPlayer.prototype.countUp = function () {
-
     this.i++;	
 
     document.getElementById('counter').innerHTML = this.i;
@@ -67,6 +67,11 @@ mySoundPlayer.prototype.countUp = function () {
 
 // instantiate counter class
 var soundPlayer = new mySoundPlayer();
+
+// button click kills looping
+$('button').on('click', function(){
+    looping = false;
+});
 
 </script>
 
