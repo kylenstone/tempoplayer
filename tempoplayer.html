@@ -52,17 +52,16 @@ mySoundPlayer.prototype.init = function () {
 
 };
 
-// define the counter method
+// define counter method
 mySoundPlayer.prototype.countUp = function () {
 
     this.i++;	
 
     document.getElementById('counter').innerHTML = this.i;
-    // find all divs containing 'counter' and update the text
-    // $("div:contains('counter')").html(this.i);
+    // find counter in dom and update the text
 };
 
-// create a new instance of our counter class
+// instantiate counter class
 var soundPlayer = new mySoundPlayer();
 
 </script>
