@@ -4,7 +4,8 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
 	<title>Tempo Player</title>
 	<style>
-	#counter {     float: left; font-size: 48px;    }
+	#counter   { float: left; font-size: 48px;    }
+    button     { margin: 30px;   }
 	</style>
 </head>
 
@@ -45,16 +46,13 @@ mySoundPlayer.prototype.init = function () {
         - callback function uses random number to set timeout delay on countUp() and DING!
         - if looping var is false, exit the loop
     */
-    setTimeout(function() {
-            function callback() {
-                timer = (getRandomThree(1, 3) * 1000); 
-                console.log(timer);
-                that.countUp();
-                sound.play(); 
-                if (looping) { setTimeout( callback, timer ); };
-            };
-            if (looping) { setTimeout( callback, timer ); };
-    });
+    (function playSound() {
+        timer = (getRandomThree(1, 3) * 1000); 
+        console.log(timer);
+        sound.play(); 
+        that.countUp();        
+        if (looping) { setTimeout( playSound, timer ); };
+    }());
 };
 
 // define counter method
